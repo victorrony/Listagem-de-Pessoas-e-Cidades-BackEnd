@@ -8,7 +8,7 @@ export const getById = async (id: number): Promise <ICidade | Error> => {
   try {
     const result = await Knex(ETableNames.cidade)
       .select('*')
-      .where('id', '*', id)
+      .where('id', '=', id)
       .first();
 
     if (result) return result;

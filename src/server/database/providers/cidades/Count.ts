@@ -13,6 +13,7 @@ export const count = async (filter = ''): Promise<number | Error> => {
 
     return new Error('Error ao consultar a quantidade total de registro');    
   } catch (error) {
+    console.log(error);
     return new Error('Error ao consultar a quantidade total de registro');    
   }
 }
