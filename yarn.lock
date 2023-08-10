@@ -1275,6 +1275,11 @@ braces@^3.0.2, braces@~3.0.2:
   dependencies:
     fill-range "^7.0.1"
 
+breeze@0.4.x:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/breeze/-/breeze-0.4.0.tgz#de70bc3ab235a775f59e7d6ee97f4e9023140571"
+  integrity sha512-YPWeVQKW1Zh4gq567pj9LPVsEfUHyXdqu1AJSIGomBMNTauFYFP4BgJ1NL8v0FqHY5JwLzyCj7nzIfuDQAsvZA==
+
 browserslist@^4.21.9:
   version "4.21.10"
   resolved "https://registry.yarnpkg.com/browserslist/-/browserslist-4.21.10.tgz#dbbac576628c13d3b2231332cb2ec5a46e015bb0"
@@ -1645,6 +1650,16 @@ dotenv@^16.3.1:
   resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-16.3.1.tgz#369034de7d7e5b120972693352a3bf112172cc3e"
   integrity sha512-IPzF4w4/Rd94bA9imS68tZBaYyBWSCE47V1RGuMrB94iyTOIEwRmVL2x/4An+6mETpLrKJ5hQkB8W4kFAadeIQ==
 
+dragonfly@0.2.x:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/dragonfly/-/dragonfly-0.2.1.tgz#d2709d0a842c80147be733e209279e0bb5625717"
+  integrity sha512-IIG+7an8YdneVG05p7qjI1lTBiAV4AHGub8OjKpXxtMfcZzc+slp5sS+uHEOWq2g5AHkJh8ppdHCz2q2J8fTcg==
+
+drip@0.3.x:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/drip/-/drip-0.3.1.tgz#a690a12c0ae2299046558f94cad1475d36746486"
+  integrity sha512-sZ+xw0tagXFeoEz8U6xXDK7YBjst7jhtUo7gEkZYalMO7MHTbYJ74ONLFzmJKPHORSMxNlhmwNkHZaT+LtpoGQ==
+
 dynamic-dedupe@^0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/dynamic-dedupe/-/dynamic-dedupe-0.3.0.tgz#06e44c223f5e4e94d78ef9db23a6515ce2f962a1"
@@ -1957,6 +1972,11 @@ fill-range@^7.0.1:
   integrity sha512-qOo9F+dMUmC2Lcb4BbVvnKJxTPjCm+RRpe4gDuGrzkL7mEVl/djYSu2OdQ2Pa302N4oqkSg9ir6jaLWJ2USVpQ==
   dependencies:
     to-regex-range "^5.0.1"
+
+filtr@0.3.x:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/filtr/-/filtr-0.3.0.tgz#957f8382e72a9efd97502150aa8cc6f488f9c62c"
+  integrity sha512-hY88bqjODQGMw1erWGwUzV6yZncnSzV+5uIeEaeWHGgN/BEQBfLG1CwQb4nDWHcyDcsAaTl1B1n18MC9NCAejg==
 
 finalhandler@1.2.0:
   version "1.2.0"
@@ -3240,6 +3260,11 @@ npmlog@^6.0.0:
     gauge "^4.0.3"
     set-blocking "^2.0.0"
 
+oath@0.2.x:
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/oath/-/oath-0.2.3.tgz#cd44fc6124fcf9cb65aca60eba05c51f3da0019e"
+  integrity sha512-/uTqn2KKy671SunNXhULGbumn2U3ZN84LvYZdnfSqqqBkM6cppm+jcUodWELd9CYVNYGh6QwJEEAQ0WM95qjpA==
+
 object-assign@^4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/object-assign/-/object-assign-4.1.1.tgz#2109adc7965887cfc05cbbd442cac8bfbb360863"
@@ -3608,6 +3633,19 @@ safe-buffer@5.2.1, safe-buffer@~5.2.0:
   resolved "https://registry.yarnpkg.com/safer-buffer/-/safer-buffer-2.1.2.tgz#44fa161b0187b9549dd84bb91802f9bd8385cd6a"
   integrity sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==
 
+seed@^0.4.4:
+  version "0.4.4"
+  resolved "https://registry.yarnpkg.com/seed/-/seed-0.4.4.tgz#750c371289d94527c6eb6541d85a8d81bd93d2f3"
+  integrity sha512-f7CTMFxC9h0LljjBaHPke9epEiupNpxxHYVaZhnMZnO8AfqNMxnYlaMDJPYmjGHI0fUXO48BmExsukNrXCNiSA==
+  dependencies:
+    breeze "0.4.x"
+    dragonfly "0.2.x"
+    drip "0.3.x"
+    filtr "0.3.x"
+    oath "0.2.x"
+    sol "0.3.x"
+    super "0.2.x"
+
 semver@^6.0.0, semver@^6.3.0, semver@^6.3.1:
   version "6.3.1"
   resolved "https://registry.yarnpkg.com/semver/-/semver-6.3.1.tgz#556d2ef8689146e46dcea4bfdd095f3434dffcb4"
@@ -3716,6 +3754,11 @@ socks@^2.6.2:
   dependencies:
     ip "^2.0.0"
     smart-buffer "^4.2.0"
+
+sol@0.3.x:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/sol/-/sol-0.3.0.tgz#99ded0367e5d58b4c5bf4f873260a7a1ea8fd611"
+  integrity sha512-/peFiFOAGoa0qgajE4KiEJ4KmjtMQBsDiOwy/6KkwYXl2x28jVDGnv6ntnqcSoMtAm+QNh8qv8XwHGuSzbLD9A==
 
 source-map-support@0.5.13:
   version "0.5.13"
@@ -3828,6 +3871,11 @@ strip-json-comments@^3.1.1:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/strip-json-comments/-/strip-json-comments-3.1.1.tgz#31f1281b3832630434831c310c01cccda8cbe006"
   integrity sha512-6fPc+R4ihwqP6N/aIv2f1gMH8lOVtWQHoqC4yK6oSDVVocumAsfCqjkXnqiYMhmMwS/mEHLp7Vehlt3ql6lEig==
+
+super@0.2.x:
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/super/-/super-0.2.3.tgz#a6695c1dce00ff58432a63e8b9ce268932b42c61"
+  integrity sha512-fjYEpGyjeC7yeAqz9vb5pwuqgSvJ8adkMowLgfltfUnP9P8g17+l0GridSWkCuTaclxE5y4EcyZj8L2NI7t1Hg==
 
 superagent@^8.0.5:
   version "8.0.9"
