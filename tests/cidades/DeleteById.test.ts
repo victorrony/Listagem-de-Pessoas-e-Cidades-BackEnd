@@ -1,34 +1,49 @@
 import { StatusCodes } from "http-status-codes";
-import { testServer } from "../jest.setup"
+import { testServer } from "../jest.setup";
 
+describe("Cidades - DeleteById", () => {
+  let accessToken = "";
+  beforeAll(async () => {
+    const email = "deletebuid-cidades@gmail.com";
+    await testServer
+      .post("/cadastrar")
+      .send({ email, senha: "123456", nome: "Teste" });
+    const signInRes = await testServer
+      .post("/entrar")
+      .send({ email, senha: "123456" });
 
+    accessToken = signInRes.body.accessToken;
+  });
 
-describe('Cidades - DeleteById', () => {
+  it("Tenta apagar registro sem usar token de autenticação", async () => {
+    const res1 = await testServer.delete("/cidades/1").send();
+    expect(res1.statusCode).toEqual(StatusCodes.UNAUTHORIZED);
+    expect(res1.body).toHaveProperty("errors.default");
+  });
 
-
-  it('Apagar Registo', async () => {
-
+  it("Apagar Registo", async () => {
     const res1 = await testServer
-      .post('/cidades')
-      .send({nome: 'tarrafal'})
+      .post("/cidades")
+      .set({ Authorization: `Bearer ${accessToken}` })
+      .send({ nome: "tarrafal" });
 
     expect(res1.statusCode).toEqual(StatusCodes.CREATED);
-    
+
     const resApagada = await testServer
       .delete(`/cidade/${res1.body}`)
+      .set({ Authorization: `Bearer ${accessToken}` })
       .send();
 
-      expect(resApagada.statusCode).toEqual(StatusCodes.NO_CONTENT);
-  })
+    expect(resApagada.statusCode).toEqual(StatusCodes.NO_CONTENT);
+  });
 
-  it('Tenta apagar um registo que nao existe', async () => {
-
-    const rest1 = await testServer
-      .delete('/cidades/99999')
+  it("Tenta apagar um registo que nao existe", async () => {
+    const res1 = await testServer
+      .delete("/cidades/99999")
+      .set({ Authorization: `Bearer ${accessToken}` })
       .send();
 
-    expect(rest1.statusCode).toEqual(StatusCodes.INTERNAL_SERVER_ERROR);
-    expect(rest1.body).toHaveProperty('errors.default');
-  })
-
-})
+    expect(res1.statusCode).toEqual(StatusCodes.INTERNAL_SERVER_ERROR);
+    expect(res1.body).toHaveProperty("errors.default");
+  });
+});
