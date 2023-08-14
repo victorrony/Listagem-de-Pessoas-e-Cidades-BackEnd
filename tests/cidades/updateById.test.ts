@@ -16,7 +16,10 @@ describe("Cidades - updateById", () => {
   });
 
   it("Tenta atualizar sem usar token de autenticação", async () => {
-    const res1 = await testServer.put("/cidades/1").send({ nome: "Teste" });
+    const res1 = await testServer
+    .put("/cidades/1")
+    .send({ nome: "Teste" });
+     
     expect(res1.statusCode).toEqual(StatusCodes.UNAUTHORIZED);
     expect(res1.body).toHaveProperty("errors.default");
   });
