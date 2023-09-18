@@ -1,8 +1,8 @@
-import { Request, Response } from "express";
-import { StatusCodes } from "http-status-codes";
+import { Request, Response } from 'express';
+import { StatusCodes } from 'http-status-codes';
 import * as yup from 'yup';
-import { validation } from "../../shared/middlewares/Validation";
-import { PessoasProviders } from "../../database/providers/pessoas";
+import { validation } from '../../shared/middlewares/Validation';
+import { PessoasProviders } from '../../database/providers/pessoas';
 
 
 interface IQueryProps {
@@ -35,7 +35,7 @@ export const getAll = async (req: Request<{}, {}, {}, IQueryProps>, res: Respons
   }
 
   res.setHeader('acces-control-expose-headers', 'x-total-count');
-  res.setHeader("X-Total-Count", count);
+  res.setHeader('X-Total-Count', count);
 
   return res.status(StatusCodes.OK).json(result);
 };

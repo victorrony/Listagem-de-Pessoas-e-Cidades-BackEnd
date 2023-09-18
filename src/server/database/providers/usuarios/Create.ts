@@ -1,6 +1,6 @@
 import { IUsuario } from './../../models/Usuario';
-import { ETableNames } from "../../ETableNames";
-import { Knex } from "../../knex";
+import { ETableNames } from '../../ETableNames';
+import { Knex } from '../../knex';
 import { PasswordCrypto } from '../../../shared/services';
 
 
@@ -19,7 +19,7 @@ export const create = async (usuario: Omit<IUsuario, 'id'>): Promise <number | E
 
     return new Error('Error ao cadastrar o registro');
   } catch (error) {
-    console.log(error)
+    console.log(error);
     return Error('Error ao cadastrar o registro');
   }
 }; 

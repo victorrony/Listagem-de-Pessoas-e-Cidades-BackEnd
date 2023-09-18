@@ -1,13 +1,13 @@
-import { Request, Response } from "express";
-import { StatusCodes } from "http-status-codes";
+import { Request, Response } from 'express';
+import { StatusCodes } from 'http-status-codes';
 import * as yup from 'yup';
-import { validation } from "../../shared/middlewares/Validation";  
-import { CidadesProviders } from "../../database/providers/cidades";
+import { validation } from '../../shared/middlewares/Validation';  
+import { CidadesProviders } from '../../database/providers/cidades';
 
 
 interface IParamProps {
   id?: number;  
-};
+}
 
 
 export const deleteByIdValidation = validation((getSchema) => ({
@@ -20,10 +20,10 @@ export const deleteByIdValidation = validation((getSchema) => ({
 export const deleteById = async (req: Request<IParamProps>, res: Response) => {
   if(!req.params.id) {
     return res.status(StatusCodes.BAD_REQUEST).json({
-    errors: {
-      default: 'O parametro "id" precisa ser encontrado.'
-    }
-  });
+      errors: {
+        default: `O parametro ${'id'} precisa ser encontrado.`
+      }
+    });
   }
   
   const result = await CidadesProviders.deleteById(req.params.id);
@@ -32,7 +32,7 @@ export const deleteById = async (req: Request<IParamProps>, res: Response) => {
       errors: {
         default: result.message
       }
-    })
+    });
   }
   return res.status(StatusCodes.NO_CONTENT).send();
 };

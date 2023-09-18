@@ -1,28 +1,28 @@
-import * as jwt from "jsonwebtoken";
+import * as jwt from 'jsonwebtoken';
 
 interface IJwtData {
   uid: number;
 }
 
-const sign = (data: IJwtData): string | 'JWT_SECRET_NOT_FOUND' => {
-  if (!process.env.JWT_SECRET) return "JWT_SECRET_NOT_FOUND";
+const sign = (data: IJwtData): string | 'JWT_SECRET_NOT_FOUND' => {  // gerar o token
+  if (!process.env.JWT_SECRET) return 'JWT_SECRET_NOT_FOUND';
 
-  return jwt.sign(data, process.env.JWT_SECRET, { expiresIn: "24" });
+  return jwt.sign(data, process.env.JWT_SECRET, { expiresIn: '24h' });
 };
 
-const verify = (
+const verify = (                 // verificar o token
   token: string
-): IJwtData | "JWT_SECRET_NOT_FOUND" | "INVALID_TOKEN" => {
-  if (!process.env.JWT_SECRET) return "JWT_SECRET_NOT_FOUND";
+): IJwtData | 'JWT_SECRET_NOT_FOUND' | 'INVALID_TOKEN' => {
+  if (!process.env.JWT_SECRET) return 'JWT_SECRET_NOT_FOUND';
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    if (typeof decoded === "string") {
-      return "INVALID_TOKEN";
+    if (typeof decoded === 'string') {
+      return 'INVALID_TOKEN';
     }
     return decoded as IJwtData;
   } catch (error) {
-    return "INVALID_TOKEN";
+    return 'INVALID_TOKEN';
   }
 };
 

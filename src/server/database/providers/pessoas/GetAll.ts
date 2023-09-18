@@ -1,6 +1,6 @@
-import { ETableNames } from "../../ETableNames";
-import { Knex } from "../../knex";
-import { IPessoa } from "../../models";
+import { ETableNames } from '../../ETableNames';
+import { Knex } from '../../knex';
+import { IPessoa } from '../../models';
 
 
 export const getAll = async (page: number, limit: number, filter: string): Promise <IPessoa[] | Error> => {

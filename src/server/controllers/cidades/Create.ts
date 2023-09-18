@@ -1,11 +1,11 @@
-import { Request, RequestHandler, Response } from "express";
-import { StatusCodes } from "http-status-codes";
-import * as yup from "yup";
-import { validation } from "../../shared/middlewares/Validation";
-import { ICidade } from "../../database/models";
-import { CidadesProviders } from "../../database/providers/cidades";
+import { Request, Response } from 'express';
+import { StatusCodes } from 'http-status-codes';
+import * as yup from 'yup';
+import { validation } from '../../shared/middlewares/Validation';
+import { ICidade } from '../../database/models';
+import { CidadesProviders } from '../../database/providers/cidades';
 
-interface IBodyProps extends Omit<ICidade, "id"> {}
+interface IBodyProps extends Omit<ICidade, 'id'> {}
 
 export const createValidation = validation((getSchema) => ({
   body: getSchema<IBodyProps>(
