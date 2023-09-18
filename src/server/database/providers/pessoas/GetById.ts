@@ -1,9 +1,8 @@
-import { ETableNames } from "../../ETableNames";
-import { Knex } from "../../knex";
-import { IPessoa } from "../../models";
+import { ETableNames } from '../../ETableNames';
+import { Knex } from '../../knex';
+import { IPessoa } from '../../models';
 
-
-export const getById = async (id: number): Promise <IPessoa | Error> => {
+export const getById = async (id: number): Promise<IPessoa | Error> => {
   try {
     const result = await Knex(ETableNames.pessoa)
       .select('*')
@@ -14,7 +13,7 @@ export const getById = async (id: number): Promise <IPessoa | Error> => {
 
     return new Error('Registro nao encontrado');
   } catch (error) {
-    console.log(error)
-    return Error('Error ao cadastrar o registro')
+    console.log(error);
+    return Error('Error ao cadastrar o registro');
   }
-};  
+};

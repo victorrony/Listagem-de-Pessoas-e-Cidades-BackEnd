@@ -1,14 +1,14 @@
 import { PessoasProviders } from './../../database/providers/pessoas/index';
-import { Request, Response } from "express";
-import { StatusCodes } from "http-status-codes";
+import { Request, Response } from 'express';
+import { StatusCodes } from 'http-status-codes';
 import * as yup from 'yup';
-import { validation } from "../../shared/middlewares/Validation";  
-import { IPessoa } from "../../database/models";
+import { validation } from '../../shared/middlewares/Validation';  
+import { IPessoa } from '../../database/models';
 
 
 interface IParamProps {
   id?: number;  
-};
+}
 
 interface IBodyProps extends Omit<IPessoa, 'id'> { }
 
@@ -28,11 +28,11 @@ export const updateById = async (req: Request<IParamProps, {}, IBodyProps>, res:
   
   if(!req.params.id) { 
     return res.status(StatusCodes.BAD_REQUEST).json({
-    errors: {
-      default: 'O parametro "id" precisa ser informado.'
-    }
-  });  
-  };
+      errors: {
+        default: `O parametro ${'id'} precisa ser informado.`
+      }
+    });  
+  }
 
   const result = await PessoasProviders.updateById(req.params.id, req.body);
   if (result instanceof Error) {
@@ -41,7 +41,7 @@ export const updateById = async (req: Request<IParamProps, {}, IBodyProps>, res:
         default: result.message
       }
     });
-  };
+  }
 
   return res.status(StatusCodes.NO_CONTENT).send();
 };

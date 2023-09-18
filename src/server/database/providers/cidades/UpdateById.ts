@@ -1,19 +1,21 @@
-import { ETableNames } from "../../ETableNames";
-import { Knex } from "../../knex";
-import { ICidade } from "../../models";
+import { ETableNames } from '../../ETableNames';
+import { Knex } from '../../knex';
+import { ICidade } from '../../models';
 
-
-export const updateById = async (id: number, cidade: Omit<ICidade, 'id'>): Promise <void | Error> => {
+export const updateById = async (
+  id: number,
+  cidade: Omit<ICidade, 'id'>
+): Promise<void | Error> => {
   try {
     const result = await Knex(ETableNames.cidade)
       .update(cidade)
-      .where('id', '=', id)
+      .where('id', '=', id);
 
     if (result > 0) return;
 
     return new Error('Error ao actualizar o registro');
   } catch (error) {
-    console.log(error)
-    return Error('Error ao actualizar o registro')
+    console.log(error);
+    return Error('Error ao actualizar o registro');
   }
-}; 
+};

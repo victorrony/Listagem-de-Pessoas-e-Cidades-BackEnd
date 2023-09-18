@@ -1,11 +1,11 @@
-import { Request, Response } from "express";
-import { StatusCodes } from "http-status-codes";
-import * as yup from "yup";
-import { validation } from "../../shared/middlewares/Validation";
-import { IUsuario } from "../../database/models/Usuario";
-import { UsuariosProvider } from "../../database/providers/usuarios";
+import { Request, Response } from 'express';
+import { StatusCodes } from 'http-status-codes';
+import * as yup from 'yup';
+import { validation } from '../../shared/middlewares/Validation';
+import { IUsuario } from '../../database/models/Usuario';
+import { UsuariosProvider } from '../../database/providers/usuarios';
 
-interface IBodyProps extends Omit<IUsuario, "id"> {}
+interface IBodyProps extends Omit<IUsuario, 'id'> {}
 
 export const signUpValidation = validation((getSchema) => ({
   body: getSchema<IBodyProps>(

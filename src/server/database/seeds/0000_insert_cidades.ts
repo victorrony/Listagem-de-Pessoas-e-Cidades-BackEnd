@@ -1,17 +1,18 @@
-import { Knex } from "knex";
-import { ETableNames } from "../ETableNames";
-
-
+import { Knex } from 'knex';
+import { ETableNames } from '../ETableNames';
 
 export const seed = async (Knex: Knex) => {
-  const [{ count }] = await Knex(ETableNames.cidade).count<[{ count: number }]>('* as count')
+  const [{ count }] = await Knex(ETableNames.cidade).count<[{ count: number }]>(
+    '* as count'
+  );
 
   if (!Number.isInteger(count) || Number(count) > 0) return;
 
-  const cidadeToInsert = cidadesDoRioGrandeDoSul.map(nomeDaCidade => ({ nome: nomeDaCidade }))
+  const cidadeToInsert = cidadesDoRioGrandeDoSul.map((nomeDaCidade) => ({
+    nome: nomeDaCidade,
+  }));
   await Knex(ETableNames.cidade).insert(cidadeToInsert);
-}
-
+};
 
 const cidadesDoRioGrandeDoSul = [
   'Aceguá',
@@ -509,5 +510,5 @@ const cidadesDoRioGrandeDoSul = [
   'Vista Gaúcha',
   'Vitória das Missões',
   'Westfália',
-  'Xangri-lá'
+  'Xangri-lá',
 ];

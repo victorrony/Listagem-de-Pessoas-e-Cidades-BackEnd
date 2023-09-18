@@ -2,13 +2,16 @@ import { ETableNames } from '../../ETableNames';
 import { Knex } from '../../knex';
 import { IPessoa } from '../../models';
 
-
-export const getAll = async (page: number, limit: number, filter: string): Promise <IPessoa[] | Error> => {
+export const getAll = async (
+  page: number,
+  limit: number,
+  filter: string
+): Promise<IPessoa[] | Error> => {
   try {
     const result = await Knex(ETableNames.pessoa)
-      .select('*')      
+      .select('*')
       .where('nomeCompleto', 'like', `%${filter}%`)
-      .offset((page -1) * limit)
+      .offset((page - 1) * limit)
       .limit(limit);
 
     return result;
@@ -16,4 +19,4 @@ export const getAll = async (page: number, limit: number, filter: string): Promi
     console.log(error);
     return Error('Error ao consultar o registro');
   }
-}; 
+};

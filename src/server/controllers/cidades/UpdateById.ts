@@ -1,15 +1,15 @@
-import { Request, RequestHandler, Response } from "express";
-import { StatusCodes } from "http-status-codes";
-import * as yup from "yup";
-import { validation } from "../../shared/middlewares/Validation";
-import { ICidade } from "../../database/models";
-import { CidadesProviders } from "../../database/providers/cidades";
+import { Request, Response } from 'express';
+import { StatusCodes } from 'http-status-codes';
+import * as yup from 'yup';
+import { validation } from '../../shared/middlewares/Validation';
+import { ICidade } from '../../database/models';
+import { CidadesProviders } from '../../database/providers/cidades';
 
 interface IParamProps {
   id?: number;
 }
 
-interface IBodyProps extends Omit<ICidade, "id"> {}
+interface IBodyProps extends Omit<ICidade, 'id'> {}
 
 export const updateByIdValidation = validation((getSchema) => ({
   body: getSchema<IBodyProps>(
@@ -31,7 +31,7 @@ export const updateById = async (
   if (!req.params.id) {
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
       errors: {
-        default: 'O parametro "id" precisa ser informado.',
+        default: `O parametro ${'id'} precisa ser informado.`
       },
     });
   }

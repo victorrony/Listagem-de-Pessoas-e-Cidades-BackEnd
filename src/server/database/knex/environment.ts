@@ -1,5 +1,5 @@
-import { Knex } from "knex";
-import path from "path";
+import { Knex } from 'knex';
+import path from 'path';
 
 
 export const development: Knex.Config = {
@@ -42,6 +42,6 @@ export const production: Knex.Config = {
     password: process.env.DATABASE_PASSWORD,
     port:Number(process.env.DATABASE_PORT || 5432),
     ssl: { rejectUnauthorized: false},
-        // Your database server address here...
+    // Your database server address here...
   } // TODO: add your own credentials here!
 };

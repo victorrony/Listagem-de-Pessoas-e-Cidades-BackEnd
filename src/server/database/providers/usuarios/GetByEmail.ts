@@ -1,6 +1,6 @@
 import { IUsuario } from './../../models/Usuario';
-import { ETableNames } from "../../ETableNames";
-import { Knex } from "../../knex";
+import { ETableNames } from '../../ETableNames';
+import { Knex } from '../../knex';
 
 
 
@@ -15,7 +15,7 @@ export const getByEmail = async (email: string): Promise <IUsuario | Error> => {
 
     return new Error('Registro nao encontrado');
   } catch (error) {
-    console.log(error)
-    return Error('Error ao cadastrar o registro')
+    console.log(error);
+    return Error('Error ao cadastrar o registro');
   }
 }; 

@@ -1,14 +1,14 @@
 import { PessoasProviders } from './../../database/providers/pessoas/index';
-import { Request, Response } from "express";
-import { StatusCodes } from "http-status-codes";
+import { Request, Response } from 'express';
+import { StatusCodes } from 'http-status-codes';
 import * as yup from 'yup';
-import { validation } from "../../shared/middlewares/Validation";  
+import { validation } from '../../shared/middlewares/Validation';  
 
 
 
 interface IParamProps {
   id?: number;  
-};
+}
 
 
 export const deleteByIdValidation = validation(get => ({
@@ -21,10 +21,10 @@ export const deleteByIdValidation = validation(get => ({
 export const deleteById = async (req: Request<IParamProps>, res: Response) => {
   if(!req.params.id) {
     return res.status(StatusCodes.BAD_REQUEST).json({
-    errors: {
-      default: 'O parametro "id" precisa ser encontrado.'
-    }
-  });
+      errors: {
+        default: `O parametro ${'id'} precisa ser informado.`
+      }
+    });
   }
   
   const result = await PessoasProviders.deleteById(req.params.id);
@@ -33,7 +33,7 @@ export const deleteById = async (req: Request<IParamProps>, res: Response) => {
       errors: {
         default: result.message
       }
-    })
+    });
   }
   return res.status(StatusCodes.NO_CONTENT).send();
 };

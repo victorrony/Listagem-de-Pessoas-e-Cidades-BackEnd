@@ -5,4 +5,4 @@ import * as getByEmail from './GetByEmail';
 export const UsuariosProvider = {
   ...getByEmail,
   ...create
-}
+};

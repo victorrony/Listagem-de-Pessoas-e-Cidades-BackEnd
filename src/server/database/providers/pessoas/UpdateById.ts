@@ -1,9 +1,11 @@
-import { ETableNames } from "../../ETableNames";
-import { Knex } from "../../knex";
-import { IPessoa } from "../../models";
+import { ETableNames } from '../../ETableNames';
+import { Knex } from '../../knex';
+import { IPessoa } from '../../models';
 
-
-export const updateById = async (id: number, pessoa: Omit<IPessoa, 'id'>): Promise <void | Error> => {
+export const updateById = async (
+  id: number,
+  pessoa: Omit<IPessoa, 'id'>
+): Promise<void | Error> => {
   try {
     const [{ count }] = await Knex(ETableNames.cidade)
       .where('id', '=', pessoa.cidadeId)
@@ -13,16 +15,15 @@ export const updateById = async (id: number, pessoa: Omit<IPessoa, 'id'>): Promi
       return new Error('A cidade usada no cadastro nao foi encontrado');
     }
 
-
     const result = await Knex(ETableNames.pessoa)
       .update(pessoa)
-      .where('id', '=', id)
+      .where('id', '=', id);
 
     if (result > 0) return;
 
     return new Error('Error ao actualizar o registro');
   } catch (error) {
-    console.log(error)
-    return Error('Error ao actualizar o registro')
+    console.log(error);
+    return Error('Error ao actualizar o registro');
   }
-}; 
+};
