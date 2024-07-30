@@ -1,10 +1,11 @@
 // import { Knex } from './server/database/knex';
-import { server } from './server/server';
+import { server } from "./api/server";
 
 const PORTA = 3333;
 
-server.listen(process.env.PORT || 3333, () => console.log(`App rodando! na porta ${PORTA}`));
-
+server.listen(process.env.PORT || 3333, () =>
+  console.log(`App rodando! na porta ${PORTA}`)
+);
 
 // if (process.env.IS_LOCALHOST  !== 'true') {
 //   console.log('Rodando migration');
