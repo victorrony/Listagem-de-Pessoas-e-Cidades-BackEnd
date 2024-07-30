@@ -4,7 +4,7 @@ interface IJwtData {
   uid: number;
 }
 
-const sign = (data: IJwtData): string | 'JWT_SECRET_NOT_FOUND' => {  // gerar o token
+const sign = (data: IJwtData) : string | 'JWT_SECRET_NOT_FOUND' => {  // gerar o token
   if (!process.env.JWT_SECRET) return 'JWT_SECRET_NOT_FOUND';
 
   return jwt.sign(data, process.env.JWT_SECRET, { expiresIn: '24h' });
