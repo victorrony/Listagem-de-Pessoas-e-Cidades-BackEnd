@@ -13,12 +13,21 @@ if (process.env.IS_LOCALHOST !== "true") {
   Knex.migrate
     .latest()
     .then(() => {
+      console.log("Migrations executadas com sucesso!");
       Knex.seed
         .run()
-        .then(() => startServer())
-        .catch(console.log);
+        .then(() => {
+          console.log("Seeds executadas com sucesso!");
+          startServer();
+        })
+        .catch((err) => {
+          console.error("Erro ao executar seeds:", err);
+        });
     })
-    .catch(console.log);
+    .catch((err) => {
+      console.error("Erro ao executar migrations:", err);
+    });
 } else {
+  console.log("Iniciando servidor sem executar migrations...");
   startServer();
 }
