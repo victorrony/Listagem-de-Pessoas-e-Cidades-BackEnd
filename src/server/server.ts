@@ -8,12 +8,7 @@ const server = express();
 
 server.use(
   cors({
-    origin: [
-      "http://localhost:3000",
-      "http://localhost:3001",
-      "http://localhost:3002",
-      "https://listagem-de-pessoas-e-cidades-front-end.vercel.app",
-    ],
+    origin: ["http://localhost:3000"],
   })
 );
 

@@ -5,15 +5,19 @@ import * as yup from "yup";
 import { validation } from "../../shared/middlewares/Validation";
 import { IUsuario } from "../../database/models/Usuario";
 import { UsuariosProvider } from "../../database/providers/usuarios";
-import { JwtService } from "../../shared/services";
+import { generateAccessToken } from "../../shared/utils/AuthUtils";
 
-interface IBodyProps extends Omit<IUsuario, "id" | "nome"> {}
+interface IBodyProps {
+  email: string;
+  password: string;
+}
 
 export const signInValidation = validation((getSchema) => ({
   body: getSchema<IBodyProps>(
     yup.object().shape({
       email: yup.string().required().email().min(5),
-      senha: yup.string().required().min(6),
+      password: yup.string().required().min(6),
+
     })
   ),
 }));
@@ -22,25 +26,33 @@ export const signIn = async (
   req: Request<{}, {}, IBodyProps>,
   res: Response
 ) => {
-  const { email, senha } = req.body;
+  const { email, password } = req.body;
 
   try {
+    //check if user exists
     const usuario = await UsuariosProvider.getByEmail(email);
     if (usuario instanceof Error) {
       return res
         .status(StatusCodes.UNAUTHORIZED)
         .json({ errors: { default: "Email invalidos" } });
     }
+    
+    //check password
     const passwordMatch = await PasswordCrypto.verifyPassword(
-      senha,
-      usuario.senha
+      password,
+      usuario.password
     );
+    console.log(`Password Match: ${passwordMatch}`); // Add logging
+
+    //if password is invalid
     if (!passwordMatch) {
       return res
         .status(StatusCodes.UNAUTHORIZED)
         .json({ errors: { default: "Senha invalidos" } });
     }
-    const accessToken = JwtService.sign({ uid: usuario.id });
+    
+    //generate token
+    const accessToken = generateAccessToken({ userId: usuario.id });
     if (accessToken === "JWT_SECRET_NOT_FOUND") {
       return res
         .status(StatusCodes.INTERNAL_SERVER_ERROR)
@@ -48,6 +60,7 @@ export const signIn = async (
     }
     return res.status(StatusCodes.OK).json({ accessToken });
   } catch (error) {
+    console.error(error);
     return res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
       .json({ errors: { default: "Erro interno do servidor" } });

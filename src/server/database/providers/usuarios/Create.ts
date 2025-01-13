@@ -7,10 +7,10 @@ export const create = async (
   usuario: Omit<IUsuario, "id">
 ): Promise<number | Error> => {
   try {
-    const hashedPassword = await PasswordCrypto.hashPassword(usuario.senha);
+    const hashedPassword = await PasswordCrypto.hashPassword(usuario.password);
 
     const [result] = await Knex(ETableNames.usuario)
-      .insert({ ...usuario, senha: hashedPassword })
+      .insert({ ...usuario, password: hashedPassword })
       .returning("id");
 
     if (typeof result === "object") {

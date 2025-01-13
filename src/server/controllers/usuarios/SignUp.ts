@@ -1,18 +1,20 @@
-import { Request, Response } from 'express';
-import { StatusCodes } from 'http-status-codes';
-import * as yup from 'yup';
-import { validation } from '../../shared/middlewares/Validation';
-import { IUsuario } from '../../database/models/Usuario';
-import { UsuariosProvider } from '../../database/providers/usuarios';
+import { Request, Response } from "express";
+import { StatusCodes } from "http-status-codes";
+import { validation } from "../../shared/middlewares/Validation";
+import { IUsuario } from "../../database/models/Usuario";
+import { UsuariosProvider } from "../../database/providers/usuarios";
+import { JwtService, PasswordCrypto } from "../../shared/services";
+import { generateAccessToken } from "../../shared/utils/AuthUtils";
+import * as yup from "yup";
 
-interface IBodyProps extends Omit<IUsuario, 'id'> {}
+interface IBodyProps extends Omit<IUsuario, "id"> {}
 
 export const signUpValidation = validation((getSchema) => ({
   body: getSchema<IBodyProps>(
     yup.object().shape({
-      nome: yup.string().required().min(3),
+      name: yup.string().required().min(3),
       email: yup.string().required().email().min(5),
-      senha: yup.string().required().min(6),
+      password: yup.string().required().min(6),
     })
   ),
 }));
@@ -21,15 +23,42 @@ export const signUp = async (
   req: Request<{}, {}, IBodyProps>,
   res: Response
 ) => {
-  const result = await UsuariosProvider.create(req.body);
+  try {
+    const { name, email, password } = req.body;
 
-  if (result instanceof Error) {
-    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-      errors: {
-        default: result.message,
-      },
+    // Check if email already exists
+    const usuario = await UsuariosProvider.getByEmail(email);
+    if (usuario && !(usuario instanceof Error)) {
+      return res
+        .status(StatusCodes.BAD_REQUEST)
+        .json({ errors: { default: "Email já cadastrado" } });
+    }
+
+    // Hash the password
+    const hashedPassword = await PasswordCrypto.hashPassword(password);
+    console.log(`Hashed Password: ${hashedPassword}`); // Add logging
+
+    // Create the user
+    const userId = await UsuariosProvider.create({
+      name,
+      email,
+      password: hashedPassword,
     });
-  }
 
-  return res.status(StatusCodes.CREATED).json(result);
+    // Check if user creation was successful
+    if (userId instanceof Error) {
+      return res
+        .status(StatusCodes.INTERNAL_SERVER_ERROR)
+        .json({ errors: { default: userId.message } });
+    }
+
+    // Generate access token
+    const accessToken = generateAccessToken({ userId });
+    return res.status(StatusCodes.CREATED).json({ accessToken });
+  } catch (error) {
+    console.error(error);
+    return res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ errors: { default: "Erro ao cadastrar o usuário" } });
+  }
 };
