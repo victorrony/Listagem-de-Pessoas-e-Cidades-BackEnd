@@ -6,6 +6,7 @@ import { validation } from "../../shared/middlewares/Validation";
 import { IUsuario } from "../../database/models/Usuario";
 import { UsuariosProvider } from "../../database/providers/usuarios";
 import { generateAccessToken } from "../../shared/utils/AuthUtils";
+import { JwtService } from "../../shared/services";
 
 interface IBodyProps {
   email: string;
@@ -34,7 +35,7 @@ export const signIn = async (
     if (usuario instanceof Error) {
       return res
         .status(StatusCodes.UNAUTHORIZED)
-        .json({ errors: { default: "Email invalidos" } });
+        .json({ errors: { default: "Email invalidos111" } });
     }
     
     //check password
@@ -50,7 +51,7 @@ export const signIn = async (
         .status(StatusCodes.UNAUTHORIZED)
         .json({ errors: { default: "Senha invalidos" } });
     }
-    
+
     //generate token
     const accessToken = generateAccessToken({ userId: usuario.id });
     if (accessToken === "JWT_SECRET_NOT_FOUND") {

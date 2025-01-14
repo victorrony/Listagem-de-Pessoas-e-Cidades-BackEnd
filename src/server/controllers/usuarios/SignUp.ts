@@ -53,7 +53,7 @@ export const signUp = async (
     }
 
     // Generate access token
-    const accessToken = generateAccessToken({ userId });
+    const accessToken = JwtService.sign({ uid: userId });
     return res.status(StatusCodes.CREATED).json({ accessToken });
   } catch (error) {
     console.error(error);
