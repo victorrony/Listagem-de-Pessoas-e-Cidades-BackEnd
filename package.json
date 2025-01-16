@@ -26,7 +26,7 @@
     "knex": "^2.5.1",
     "mysql": "^2.18.1",
     "pg": "^8.11.2",
-    "seed": "^0.4.4",
+    "seed": "^0.4.4",   
     "ts-node-dev": "^2.0.0",
     "tsc": "^2.0.4",
     "yup": "^1.2.0"
@@ -43,6 +43,8 @@
     "@types/mocha": "^10.0.6",
     "@types/pg": "^8.10.2",
     "@types/supertest": "^2.0.12",
+    "@types/swagger-jsdoc": "^6.0.4",
+    "@types/swagger-ui-express": "^4.1.7",
     "@typescript-eslint/eslint-plugin": "^6.2.1",
     "@typescript-eslint/parser": "^6.2.1",
     "eslint": "^8.46.0",
