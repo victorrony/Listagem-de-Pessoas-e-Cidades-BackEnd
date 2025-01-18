@@ -4,8 +4,8 @@ import { validation } from "../../shared/middlewares/Validation";
 import { IUsuario } from "../../database/models/Usuario";
 import { UsuariosProvider } from "../../database/providers/usuarios";
 import { JwtService, PasswordCrypto } from "../../shared/services";
-import { generateAccessToken } from "../../shared/utils/AuthUtils";
 import * as yup from "yup";
+import { generateAccessToken } from "../../shared/utils/AuthUtils";
 
 interface IBodyProps extends Omit<IUsuario, "id"> {}
 
@@ -34,29 +34,28 @@ export const signUp = async (
         .json({ errors: { default: "Email já cadastrado" } });
     }
 
-    // Hash the password
+    //hash password
     const hashedPassword = await PasswordCrypto.hashPassword(password);
-    console.log(`Hashed Password: ${hashedPassword}`); // Add logging
-
-    // Create the user
     const userId = await UsuariosProvider.create({
       name,
       email,
       password: hashedPassword,
     });
 
-    // Check if user creation was successful
+    //check if user was created
     if (userId instanceof Error) {
       return res
         .status(StatusCodes.INTERNAL_SERVER_ERROR)
         .json({ errors: { default: userId.message } });
     }
 
-    // Generate access token
-    const accessToken = JwtService.sign({ uid: userId });
-    return res.status(StatusCodes.CREATED).json({ accessToken });
+    // Generate access token with correct payload
+    const accessToken = generateAccessToken({ userId: userId });
+    return res
+      .status(StatusCodes.CREATED)
+      .json({ accessToken });
   } catch (error) {
-    console.error(error);
+    console.log(error);
     return res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
       .json({ errors: { default: "Erro ao cadastrar o usuário" } });

@@ -5,8 +5,8 @@ import * as yup from "yup";
 import { validation } from "../../shared/middlewares/Validation";
 import { IUsuario } from "../../database/models/Usuario";
 import { UsuariosProvider } from "../../database/providers/usuarios";
-import { generateAccessToken } from "../../shared/utils/AuthUtils";
 import { JwtService } from "../../shared/services";
+import { generateAccessToken } from "../../shared/utils/AuthUtils";
 
 interface IBodyProps {
   email: string;
@@ -30,28 +30,21 @@ export const signIn = async (
   const { email, password } = req.body;
 
   try {
-    //check if user exists
     const usuario = await UsuariosProvider.getByEmail(email);
     if (usuario instanceof Error) {
       return res
         .status(StatusCodes.UNAUTHORIZED)
-        .json({ errors: { default: "Email invalidos111" } });
+        .json({ errors: { default: "Email invalidos" } });
     }
-    
-    //check password
     const passwordMatch = await PasswordCrypto.verifyPassword(
       password,
       usuario.password
     );
-    console.log(`Password Match: ${passwordMatch}`); // Add logging
-
-    //if password is invalid
     if (!passwordMatch) {
       return res
         .status(StatusCodes.UNAUTHORIZED)
         .json({ errors: { default: "Senha invalidos" } });
     }
-
     //generate token
     const accessToken = generateAccessToken({ userId: usuario.id });
     if (accessToken === "JWT_SECRET_NOT_FOUND") {
@@ -61,7 +54,6 @@ export const signIn = async (
     }
     return res.status(StatusCodes.OK).json({ accessToken });
   } catch (error) {
-    console.error(error);
     return res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
       .json({ errors: { default: "Erro interno do servidor" } });
