@@ -1,5 +1,5 @@
-import swaggerJsdoc from "swagger-jsdoc";
-import swaggerUi from "swagger-ui-express";
+import swaggerJsdoc from "swagger-jsdoc"; // Correct import
+import swaggerUi from "swagger-ui-express"; // Ensure correct import
 import { Express } from "express";
 import path from "path";
 

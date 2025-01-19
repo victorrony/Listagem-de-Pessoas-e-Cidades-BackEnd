@@ -3,7 +3,7 @@ import { StatusCodes } from "http-status-codes";
 import { validation } from "../../shared/middlewares/Validation";
 import { IUsuario } from "../../database/models/Usuario";
 import { UsuariosProvider } from "../../database/providers/usuarios";
-import { JwtService, PasswordCrypto } from "../../shared/services";
+import { PasswordCrypto } from "../../shared/services";
 import * as yup from "yup";
 import { generateAccessToken } from "../../shared/utils/AuthUtils";
 
@@ -34,15 +34,18 @@ export const signUp = async (
         .json({ errors: { default: "Email já cadastrado" } });
     }
 
-    //hash password
+    // Hash the password
     const hashedPassword = await PasswordCrypto.hashPassword(password);
+    console.log(`Hashed Password: ${hashedPassword}`); // Add logging
+
+    // Create the user
     const userId = await UsuariosProvider.create({
       name,
       email,
       password: hashedPassword,
     });
 
-    //check if user was created
+    // Check if user creation was successful
     if (userId instanceof Error) {
       return res
         .status(StatusCodes.INTERNAL_SERVER_ERROR)
@@ -51,6 +54,7 @@ export const signUp = async (
 
     // Generate access token with correct payload
     const accessToken = generateAccessToken({ userId: userId });
+    console.log(`Access Token: ${accessToken}`); // Add logging
     return res
       .status(StatusCodes.CREATED)
       .json({ accessToken });

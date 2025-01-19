@@ -1,19 +1,56 @@
-import { compare, genSalt, hash } from 'bcryptjs';
+// import bcrypt from "bcrypt";
 
-const SALT_RANDOMS = 8;
+// export class PasswordCrypto {
+//   private static readonly saltRounds = 10;
 
-const hashPassword = async (password: string) => {      // cryptografar a senha
-  const saltGenerated = await genSalt(SALT_RANDOMS);
+//   static async hashPassword(password: string): Promise<string> {
+//     try {
+//       const hashed = await bcrypt.hash(password, this.saltRounds);
+//       console.log(`PasswordCrypto.hashPassword: ${hashed}`); // Add logging
+//       return hashed;
+//     } catch (error) {
+//       console.error("Error hashing password:", error);
+//       throw error;
+//     }
+//   }
 
-  return await hash(password, saltGenerated);
-};
+//   static async verifyPassword(
+//     password: string,
+//     hashedPassword: string
+//   ): Promise<boolean> {
+//     try {
+//       const match = await bcrypt.compare(password, hashedPassword);
+//       console.log(`PasswordCrypto.verifyPassword: ${match}`); // Add logging
+//       return match;
+//     } catch (error) {
+//       console.error("Error verifying password:", error);
+//       throw error;
+//     }
+//   }
+// }
+import { genSalt, hash, compare } from "bcryptjs";
 
-const verifyPassword = async (password: string, hashedPassword: string) => {     // verificar a senha se estar correta
-  return await compare(password, hashedPassword);
-};
-
+const SALT_ROUNDS = 8;
 
 export const PasswordCrypto = {
-  hashPassword,
-  verifyPassword
+  /**
+   * Hash a password using bcryptjs
+   * @param password The password to hash
+   */
+  async hashPassword(password: string): Promise<string> {
+    const salt = await genSalt(SALT_ROUNDS);
+    return hash(password, salt);
+  },
+
+  /**
+   * Verify a password against a hashed password
+   * @param password The password to verify
+   * @param hashedPassword The hashed password to verify against
+   */
+  async verifyPassword(
+    password: string,
+    hashedPassword: string
+  ): Promise<boolean> {
+    return compare(password, hashedPassword);
+  },
 };

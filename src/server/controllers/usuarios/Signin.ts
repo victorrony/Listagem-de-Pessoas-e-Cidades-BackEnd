@@ -3,9 +3,7 @@ import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import * as yup from "yup";
 import { validation } from "../../shared/middlewares/Validation";
-import { IUsuario } from "../../database/models/Usuario";
 import { UsuariosProvider } from "../../database/providers/usuarios";
-import { JwtService } from "../../shared/services";
 import { generateAccessToken } from "../../shared/utils/AuthUtils";
 
 interface IBodyProps {
@@ -36,17 +34,24 @@ export const signIn = async (
         .status(StatusCodes.UNAUTHORIZED)
         .json({ errors: { default: "Email invalidos" } });
     }
+
+    console.log(`Stored Hashed Password: ${usuario.password}`); // Add logging
+
     const passwordMatch = await PasswordCrypto.verifyPassword(
       password,
       usuario.password
     );
+    console.log(`Password Match: ${passwordMatch}`); // Add logging
+
     if (!passwordMatch) {
       return res
         .status(StatusCodes.UNAUTHORIZED)
         .json({ errors: { default: "Senha invalidos" } });
     }
-    //generate token
+
+    // Generate token
     const accessToken = generateAccessToken({ userId: usuario.id });
+    console.log(`Access Token: ${accessToken}`); // Add logging
     if (accessToken === "JWT_SECRET_NOT_FOUND") {
       return res
         .status(StatusCodes.INTERNAL_SERVER_ERROR)
@@ -54,6 +59,7 @@ export const signIn = async (
     }
     return res.status(StatusCodes.OK).json({ accessToken });
   } catch (error) {
+    console.error(error);
     return res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
       .json({ errors: { default: "Erro interno do servidor" } });
