@@ -10,7 +10,7 @@ const server = express();
 server.use(
   cors({
     origin: [
-      'https://listagem-de-pessoas-e-cidades-front.vercel.app', 
+      'https://listagem-de-pessoas-e-cidades-front.vercel.app/pagina-inicial', 
       'http://localhost:3000',
     ],
   })
