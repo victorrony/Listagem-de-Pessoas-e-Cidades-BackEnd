@@ -12,6 +12,7 @@ server.use(
     origin: [
       'https://listagem-de-pessoas-e-cidades-front.vercel.app', 
       'http://localhost:3000',
+      'http://localhost:3001',
     ],
   })
 );
